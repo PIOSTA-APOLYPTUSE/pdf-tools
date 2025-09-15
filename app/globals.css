@@ -121,13 +121,22 @@
   }
 }
 
-/* 브라우저 호환성 스타일 */
+
+/* 브라우저 호환성 스타일 개선 */
 @layer utilities {
+  /* user-select 호환성 */
   .select-none {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+  }
+
+  /* webkit-text-size-adjust 호환성 (iOS Safari) */
+  html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
 
   /* Safari 지원을 위한 추가 스타일 */
@@ -137,15 +146,58 @@
     white-space: nowrap;
   }
 
+  /* 브라우저별 스크롤바 스타일 */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(156 163 175) transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: rgb(156 163 175);
+    border-radius: 3px;
+  }
+
+  /* 모바일 브라우저 탭 하이라이트 제거 */
+  .tap-highlight-transparent {
+    -webkit-tap-highlight-color: transparent;
+  }
+
   /* 접근성 개선 */
   button:focus-visible {
     outline: 2px solid rgb(59 130 246 / 0.5);
     outline-offset: 2px;
   }
 
-  /* input 접근성 */
+  /* input 접근성 및 호환성 */
   input:focus-visible {
     outline: 2px solid rgb(59 130 246 / 0.5);
     outline-offset: 2px;
+  }
+
+  /* input 숫자 스피너 제거 (크로스 브라우저) */
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+
+  /* 페이지 입력 필드 전용 스타일 */
+  .page-input {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.025em;
   }
 }

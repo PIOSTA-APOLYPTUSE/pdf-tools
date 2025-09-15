@@ -10,8 +10,8 @@ import { splitPDF, downloadPDF } from '@/lib/pdf-utils';
 import { toast } from 'sonner';
 
 interface SplitRange {
-  start: number;
-  end: number;
+  start: number | string;
+  end: number | string;
   name: string;
 }
 
@@ -65,6 +65,77 @@ export function PDFSplit() {
     );
   };
 
+  // 숫자 입력 핸들러 (백스페이스 문제 해결)
+  const handleNumberInput = (
+    index: number,
+    field: 'start' | 'end',
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const value = event.target.value;
+
+    // 빈 문자열이면 빈 문자열로 설정 (백스페이스로 모든 문자 삭제한 경우)
+    if (value === '') {
+      updateRange(index, field, '');
+      return;
+    }
+
+    // 숫자만 추출
+    const numericValue = value.replace(/[^0-9]/g, '');
+    if (numericValue === '') {
+      updateRange(index, field, '');
+      return;
+    }
+
+    const number = parseInt(numericValue);
+
+    // 범위 검증
+    if (field === 'start') {
+      const validStart = Math.max(1, Math.min(number, pageCount));
+      updateRange(index, field, validStart);
+    } else {
+      const validEnd = Math.max(1, Math.min(number, pageCount));
+      updateRange(index, field, validEnd);
+    }
+  };
+
+  // 붙여넣기 이벤트 핸들러
+  const handlePaste = (
+    index: number,
+    field: 'start' | 'end',
+    event: React.ClipboardEvent<HTMLInputElement>
+  ) => {
+    event.preventDefault();
+    const paste = event.clipboardData.getData('text');
+    const numericValue = paste.replace(/[^0-9]/g, '');
+
+    if (numericValue === '') return;
+
+    const number = parseInt(numericValue);
+    const validNumber = Math.max(1, Math.min(number, pageCount));
+    updateRange(index, field, validNumber);
+  };
+
+  // 키보드 이벤트 핸들러
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    const allowedKeys = [
+      'Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown',
+      'Tab', 'Enter', 'Home', 'End'
+    ];
+
+    // 허용된 키이거나 숫자키인 경우만 통과
+    if (allowedKeys.includes(event.key) || /^[0-9]$/.test(event.key)) {
+      return;
+    }
+
+    // Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X 허용
+    if (event.ctrlKey && ['a', 'c', 'v', 'x'].includes(event.key.toLowerCase())) {
+      return;
+    }
+
+    // 그 외의 키는 차단
+    event.preventDefault();
+  };
+
   const removeRange = (index: number) => {
     if (ranges.length > 1) {
       setRanges((prev) => prev.filter((_, i) => i !== index));
@@ -82,6 +153,26 @@ export function PDFSplit() {
       return;
     }
 
+    // 빈 값이나 잘못된 값들을 검증
+    const validRanges = ranges.filter(range => {
+      const start = typeof range.start === 'string' ? parseInt(range.start) : range.start;
+      const end = typeof range.end === 'string' ? parseInt(range.end) : range.end;
+
+      return !isNaN(start) && !isNaN(end) && start > 0 && end > 0 && start <= pageCount && end <= pageCount;
+    });
+
+    if (validRanges.length === 0) {
+      toast.error('유효한 페이지 범위를 설정해주세요.');
+      return;
+    }
+
+    // 숫자 타입으로 변환된 범위들
+    const processedRanges = validRanges.map(range => ({
+      ...range,
+      start: typeof range.start === 'string' ? parseInt(range.start) : range.start,
+      end: typeof range.end === 'string' ? parseInt(range.end) : range.end
+    }));
+
     setIsProcessing(true);
     setProgress(0);
 
@@ -90,7 +181,7 @@ export function PDFSplit() {
         setProgress((prev) => Math.min(prev + 10, 90));
       }, 100);
 
-      const splitPDFs = await splitPDF(file, ranges);
+      const splitPDFs = await splitPDF(file, processedRanges);
 
       clearInterval(progressInterval);
       setProgress(100);
@@ -98,7 +189,7 @@ export function PDFSplit() {
       // 각 분할된 PDF를 다운로드
       splitPDFs.forEach((pdfBytes, index) => {
         setTimeout(() => {
-          downloadPDF(pdfBytes, `${ranges[index].name}.pdf`);
+          downloadPDF(pdfBytes, `${processedRanges[index].name}.pdf`);
         }, index * 500); // 500ms 간격으로 다운로드
       });
 
@@ -182,35 +273,46 @@ export function PDFSplit() {
                 <div key={index} className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
                   <input
                     type="text"
+                    id={`range-${index}-name`}
+                    name={`range-${index}-name`}
                     placeholder="파일명"
                     value={range.name}
                     onChange={(e) => updateRange(index, 'name', e.target.value)}
                     className="flex-1 px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-primary"
                     aria-label={`범위 ${index + 1} 파일명`}
                     title={`범위 ${index + 1}의 파일명을 입력하세요`}
+                    autoComplete="off"
                   />
                   <input
-                    type="number"
+                    type="text"
+                    id={`range-${index}-start`}
+                    name={`range-${index}-start`}
                     placeholder="시작"
-                    min="1"
-                    max={pageCount}
                     value={range.start}
-                    onChange={(e) => updateRange(index, 'start', parseInt(e.target.value) || 1)}
-                    className="w-16 px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-primary"
+                    onChange={(e) => handleNumberInput(index, 'start', e)}
+                    onKeyDown={handleKeyDown}
+                    onPaste={(e) => handlePaste(index, 'start', e)}
+                    className="w-16 px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-primary page-input"
                     aria-label={`범위 ${index + 1} 시작 페이지`}
-                    title={`범위 ${index + 1}의 시작 페이지를 입력하세요`}
+                    title={`범위 ${index + 1}의 시작 페이지를 입력하세요 (1-${pageCount})`}
+                    autoComplete="off"
+                    inputMode="numeric"
                   />
                   <span className="text-sm text-gray-500">~</span>
                   <input
-                    type="number"
+                    type="text"
+                    id={`range-${index}-end`}
+                    name={`range-${index}-end`}
                     placeholder="끝"
-                    min="1"
-                    max={pageCount}
                     value={range.end}
-                    onChange={(e) => updateRange(index, 'end', parseInt(e.target.value) || pageCount)}
-                    className="w-16 px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-primary"
+                    onChange={(e) => handleNumberInput(index, 'end', e)}
+                    onKeyDown={handleKeyDown}
+                    onPaste={(e) => handlePaste(index, 'end', e)}
+                    className="w-16 px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-primary page-input"
                     aria-label={`범위 ${index + 1} 끝 페이지`}
-                    title={`범위 ${index + 1}의 끝 페이지를 입력하세요`}
+                    title={`범위 ${index + 1}의 끝 페이지를 입력하세요 (1-${pageCount})`}
+                    autoComplete="off"
+                    inputMode="numeric"
                   />
                   {ranges.length > 1 && (
                     <Button
