@@ -154,16 +154,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* 광고 영역 (placeholder) */}
-            <div className="mt-12 max-w-2xl mx-auto">
-              <div className="bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
-                <p className="text-gray-500 font-medium mb-2">광고 영역</p>
-                <p className="text-sm text-gray-400">
-                  이 서비스는 광고를 통해 운영됩니다
-                </p>
-              </div>
-            </div>
-
           </div>
         ) : activeTool === 'merge' ? (
           <PDFMerge />
