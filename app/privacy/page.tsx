@@ -33,7 +33,7 @@ export default function PrivacyPolicy() {
         <Card>
           <CardHeader>
             <CardTitle className="text-3xl">개인정보 처리방침</CardTitle>
-            <p className="text-gray-600">최종 업데이트: 2024년 9월 16일</p>
+            <p className="text-gray-600">최종 업데이트: 2025년 1월 16일</p>
           </CardHeader>
           <CardContent className="prose max-w-none">
             <div className="space-y-6">
@@ -143,7 +143,7 @@ export default function PrivacyPolicy() {
               <section>
                 <h2 className="text-2xl font-semibold mb-4">9. 개인정보 처리방침 변경</h2>
                 <p className="text-gray-700 leading-relaxed">
-                  이 개인정보 처리방침은 2024년 9월 16일부터 적용되며, 법령 및 방침에 따른 변경내용의
+                  이 개인정보 처리방침은 2025년 1월 16일부터 적용되며, 법령 및 방침에 따른 변경내용의
                   추가, 삭제 및 정정이 있는 경우에는 변경사항의 시행 7일 전부터 공지사항을 통하여 고지할 것입니다.
                 </p>
               </section>
@@ -164,7 +164,7 @@ export default function PrivacyPolicy() {
       <footer className="bg-white border-t mt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center text-gray-600">
-            <p>&copy; 2024 PDF Tools. 모든 권리 보유.</p>
+            <p>&copy; 2025 PDF Tools. 모든 권리 보유.</p>
             <div className="mt-4 space-x-4">
               <Link href="/privacy" className="text-blue-600 hover:underline">
                 개인정보 처리방침

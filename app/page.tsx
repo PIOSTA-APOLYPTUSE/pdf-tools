@@ -176,7 +176,7 @@ export default function Home() {
       <footer className="bg-white border-t mt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center text-gray-600">
-            <p>&copy; 2024 PDF Tools. 모든 권리 보유.</p>
+            <p>&copy; 2025 PDF Tools. 모든 권리 보유.</p>
             <p className="text-sm mt-2">
               이 도구는 브라우저에서 작동하며 파일이 외부로 전송되지 않습니다.
             </p>

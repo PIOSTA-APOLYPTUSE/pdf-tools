@@ -164,7 +164,7 @@ export default function Contact() {
       <footer className="bg-white border-t mt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center text-gray-600">
-            <p>&copy; 2024 PDF Tools. 모든 권리 보유.</p>
+            <p>&copy; 2025 PDF Tools. 모든 권리 보유.</p>
             <div className="mt-4 space-x-4">
               <Link href="/privacy" className="text-blue-600 hover:underline">
                 개인정보 처리방침
