@@ -166,7 +166,7 @@ export default function Home() {
                   </h4>
                   <p className="text-gray-600">
                     PDF 합치기 도구를 선택한 후, 합치고 싶은 PDF 파일들을 드래그 앤 드롭하거나 클릭하여 업로드하세요.
-                    파일 순서를 확인한 후 '합치기' 버튼을 클릭하면 하나의 PDF 파일로 다운로드됩니다.
+                    파일 순서를 확인한 후 &apos;합치기&apos; 버튼을 클릭하면 하나의 PDF 파일로 다운로드됩니다.
                   </p>
                 </div>
 
@@ -176,7 +176,7 @@ export default function Home() {
                   </h4>
                   <p className="text-gray-600">
                     PDF 분할 도구에서 분할하고 싶은 PDF 파일을 업로드하세요.
-                    페이지 범위를 설정하고 각 파일의 이름을 정한 후 '분할' 버튼을 클릭하면 여러 개의 PDF 파일로 나누어집니다.
+                    페이지 범위를 설정하고 각 파일의 이름을 정한 후 &apos;분할&apos; 버튼을 클릭하면 여러 개의 PDF 파일로 나누어집니다.
                   </p>
                 </div>
 
