@@ -9,6 +9,13 @@ interface GoogleAdSenseProps {
   className?: string;
 }
 
+// Window interface 확장을 위한 타입 정의
+declare global {
+  interface Window {
+    adsbygoogle?: unknown[];
+  }
+}
+
 export function GoogleAdSense({
   adSlot,
   adFormat = 'auto',
@@ -18,8 +25,8 @@ export function GoogleAdSense({
   useEffect(() => {
     try {
       // Google AdSense 스크립트가 로드된 후 광고를 초기화
-      if (typeof window !== 'undefined' && (window as any).adsbygoogle) {
-        ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({});
+      if (typeof window !== 'undefined' && window.adsbygoogle) {
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
       }
     } catch (err) {
       console.error('AdSense error:', err);

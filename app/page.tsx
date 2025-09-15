@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { FileText, Scissors, Heart, Coffee } from 'lucide-react';
+import { FileText, Scissors} from 'lucide-react';
 import { PDFMerge } from '@/components/pdf-merge';
 import { PDFSplit } from '@/components/pdf-split';
 
