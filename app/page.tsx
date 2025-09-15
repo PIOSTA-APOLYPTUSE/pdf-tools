@@ -64,8 +64,14 @@ export default function Home() {
               <h2 className="text-3xl font-bold text-gray-900 mb-4">
                 간편한 PDF 편집 도구
               </h2>
-              <p className="text-xl text-gray-600 mb-8">
+              <p className="text-xl text-gray-600 mb-4">
                 PDF 파일을 빠르고 안전하게 합치거나 분할하세요
+              </p>
+              <p className="text-base text-gray-500 max-w-3xl mx-auto mb-8">
+                완전 무료 온라인 PDF 편집 도구로 회원가입 없이 바로 사용 가능합니다.
+                모든 작업은 브라우저에서 처리되어 파일이 서버로 전송되지 않으므로 100% 안전합니다.
+                업무용 문서 정리, 학습 자료 편집, 계약서 관리 등 다양한 용도로 활용하세요.
+                PC와 모바일 모든 기기에서 호환되며, 파일 크기 제한 없이 무제한 이용 가능합니다.
               </p>
             </div>
 
@@ -87,6 +93,23 @@ export default function Home() {
                       <CardDescription className="text-base">
                         {tool.description}
                       </CardDescription>
+                      {tool.id === 'merge' && (
+                        <div className="text-sm text-gray-600 mt-2 text-left">
+                          <p>PDF 합치기 도구를 사용하면 여러 개의 PDF 문서를 손쉽게 하나의 파일로 결합할 수 있습니다.
+                          회사 문서, 계약서, 보고서 등을 정리할 때 매우 유용합니다. 파일은 브라우저에서 직접 처리되므로
+                          업로드 속도가 빠르며 개인정보가 외부로 유출될 걱정이 없습니다. 드래그 앤 드롭으로 간편하게
+                          파일을 추가하고 원하는 순서로 정렬한 후 합치기 버튼을 클릭하면 즉시 다운로드됩니다.</p>
+                        </div>
+                      )}
+                      {tool.id === 'split' && (
+                        <div className="text-sm text-gray-600 mt-2 text-left">
+                          <p>PDF 분할 도구는 큰 PDF 파일을 원하는 페이지 범위별로 나누어 여러 개의 작은 파일로
+                          만들어주는 기능입니다. 예를 들어 100페이지짜리 매뉴얼에서 특정 챕터만 추출하거나,
+                          계약서에서 필요한 부분만 따로 저장할 때 활용할 수 있습니다. 각 분할 범위마다 원하는
+                          파일명을 지정할 수 있으며, 한 번에 여러 구간을 설정하여 동시에 분할 처리가 가능합니다.
+                          모든 작업은 로컬에서 처리되어 안전하고 빠릅니다.</p>
+                        </div>
+                      )}
                     </CardHeader>
                     <CardContent className="text-center">
                       <Button className="w-full" size="lg">
@@ -109,21 +132,24 @@ export default function Home() {
                     <span className="text-2xl">🚀</span>
                   </div>
                   <h4 className="text-lg font-semibold mb-2">빠른 처리</h4>
-                  <p className="text-gray-600">브라우저에서 바로 처리되어 빠르고 안전합니다</p>
+                  <p className="text-gray-600">브라우저에서 바로 처리되어 빠르고 안전합니다.
+                  서버 업로드 없이 로컬에서 즉시 처리되므로 대용량 파일도 신속하게 편집할 수 있습니다.</p>
                 </div>
                 <div className="text-center">
                   <div className="bg-blue-100 p-3 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
                     <span className="text-2xl">🔒</span>
                   </div>
                   <h4 className="text-lg font-semibold mb-2">완전 무료</h4>
-                  <p className="text-gray-600">회원가입 없이 완전 무료로 사용하세요</p>
+                  <p className="text-gray-600">회원가입 없이 완전 무료로 사용하세요.
+                  숨겨진 비용이나 제한 없이 무제한으로 PDF 편집 기능을 이용할 수 있습니다.</p>
                 </div>
                 <div className="text-center">
                   <div className="bg-purple-100 p-3 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
                     <span className="text-2xl">🛡️</span>
                   </div>
                   <h4 className="text-lg font-semibold mb-2">개인정보 보호</h4>
-                  <p className="text-gray-600">파일이 서버에 전송되지 않아 100% 안전합니다</p>
+                  <p className="text-gray-600">파일이 서버에 전송되지 않아 100% 안전합니다.
+                  민감한 문서도 안심하고 편집할 수 있으며, 작업 완료 후 브라우저에서 자동 삭제됩니다.</p>
                 </div>
               </div>
             </div>
@@ -154,6 +180,14 @@ export default function Home() {
             <p className="text-sm mt-2">
               이 도구는 브라우저에서 작동하며 파일이 외부로 전송되지 않습니다.
             </p>
+            <div className="mt-4 space-x-4">
+              <a href="/privacy" className="text-blue-600 hover:underline text-sm">
+                개인정보 처리방침
+              </a>
+              <a href="/contact" className="text-blue-600 hover:underline text-sm">
+                문의하기
+              </a>
+            </div>
           </div>
         </div>
       </footer>
