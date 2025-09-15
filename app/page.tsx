@@ -1,102 +1,161 @@
-import Image from "next/image";
+'use client';
+
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { FileText, Scissors, Heart, Coffee } from 'lucide-react';
+import { PDFMerge } from '@/components/pdf-merge';
+import { PDFSplit } from '@/components/pdf-split';
+
+type Tool = 'merge' | 'split';
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [activeTool, setActiveTool] = useState<Tool | null>(null);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const tools = [
+    {
+      id: 'merge' as Tool,
+      title: 'PDF 합치기',
+      description: '여러 PDF 파일을 하나로 합칩니다',
+      icon: FileText,
+      color: 'text-blue-600',
+    },
+    {
+      id: 'split' as Tool,
+      title: 'PDF 분할',
+      description: 'PDF 파일을 페이지별로 분할합니다',
+      icon: Scissors,
+      color: 'text-green-600',
+    },
+  ];
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+      {/* 헤더 */}
+      <header className="bg-white shadow-sm border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <div className="bg-blue-600 p-2 rounded-lg">
+                <FileText className="h-6 w-6 text-white" />
+              </div>
+              <div>
+                <h1 className="text-xl font-bold text-gray-900">PDF Tools</h1>
+                <p className="text-sm text-gray-600">무료 PDF 편집 도구</p>
+              </div>
+            </div>
+            {activeTool && (
+              <Button
+                variant="outline"
+                onClick={() => setActiveTool(null)}
+              >
+                ← 도구 선택으로 돌아가기
+              </Button>
+            )}
+          </div>
         </div>
+      </header>
+
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {!activeTool ? (
+          <div className="space-y-8">
+            {/* 히어로 섹션 */}
+            <div className="text-center">
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                간편한 PDF 편집 도구
+              </h2>
+              <p className="text-xl text-gray-600 mb-8">
+                PDF 파일을 빠르고 안전하게 합치거나 분할하세요
+              </p>
+            </div>
+
+            {/* 도구 선택 */}
+            <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+              {tools.map((tool) => {
+                const Icon = tool.icon;
+                return (
+                  <Card
+                    key={tool.id}
+                    className="cursor-pointer transition-all hover:shadow-lg hover:scale-105 border-2 hover:border-blue-300"
+                    onClick={() => setActiveTool(tool.id)}
+                  >
+                    <CardHeader className="text-center pb-4">
+                      <div className={`mx-auto mb-4 p-4 rounded-full bg-gray-50`}>
+                        <Icon className={`h-12 w-12 ${tool.color}`} />
+                      </div>
+                      <CardTitle className="text-2xl">{tool.title}</CardTitle>
+                      <CardDescription className="text-base">
+                        {tool.description}
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="text-center">
+                      <Button className="w-full" size="lg">
+                        시작하기
+                      </Button>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+
+            {/* 특징 */}
+            <div className="mt-12 text-center">
+              <h3 className="text-2xl font-bold text-gray-900 mb-8">
+                왜 PDF Tools를 선택해야 할까요?
+              </h3>
+              <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                <div className="text-center">
+                  <div className="bg-green-100 p-3 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                    <span className="text-2xl">🚀</span>
+                  </div>
+                  <h4 className="text-lg font-semibold mb-2">빠른 처리</h4>
+                  <p className="text-gray-600">브라우저에서 바로 처리되어 빠르고 안전합니다</p>
+                </div>
+                <div className="text-center">
+                  <div className="bg-blue-100 p-3 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                    <span className="text-2xl">🔒</span>
+                  </div>
+                  <h4 className="text-lg font-semibold mb-2">완전 무료</h4>
+                  <p className="text-gray-600">회원가입 없이 완전 무료로 사용하세요</p>
+                </div>
+                <div className="text-center">
+                  <div className="bg-purple-100 p-3 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                    <span className="text-2xl">🛡️</span>
+                  </div>
+                  <h4 className="text-lg font-semibold mb-2">개인정보 보호</h4>
+                  <p className="text-gray-600">파일이 서버에 전송되지 않아 100% 안전합니다</p>
+                </div>
+              </div>
+            </div>
+
+            {/* 광고 영역 (placeholder) */}
+            <div className="mt-12 max-w-2xl mx-auto">
+              <div className="bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+                <p className="text-gray-500 font-medium mb-2">광고 영역</p>
+                <p className="text-sm text-gray-400">
+                  이 서비스는 광고를 통해 운영됩니다
+                </p>
+              </div>
+            </div>
+
+          </div>
+        ) : activeTool === 'merge' ? (
+          <PDFMerge />
+        ) : (
+          <PDFSplit />
+        )}
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+
+      {/* 푸터 */}
+      <footer className="bg-white border-t mt-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="text-center text-gray-600">
+            <p>&copy; 2024 PDF Tools. 모든 권리 보유.</p>
+            <p className="text-sm mt-2">
+              이 도구는 브라우저에서 작동하며 파일이 외부로 전송되지 않습니다.
+            </p>
+          </div>
+        </div>
       </footer>
     </div>
   );
