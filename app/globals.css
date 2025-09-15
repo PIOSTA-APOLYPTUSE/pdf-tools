@@ -120,3 +120,32 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* 브라우저 호환성 스타일 */
+@layer utilities {
+  .select-none {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  /* Safari 지원을 위한 추가 스타일 */
+  .truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* 접근성 개선 */
+  button:focus-visible {
+    outline: 2px solid rgb(59 130 246 / 0.5);
+    outline-offset: 2px;
+  }
+
+  /* input 접근성 */
+  input:focus-visible {
+    outline: 2px solid rgb(59 130 246 / 0.5);
+    outline-offset: 2px;
+  }
+}

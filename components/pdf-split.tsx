@@ -186,6 +186,8 @@ export function PDFSplit() {
                     value={range.name}
                     onChange={(e) => updateRange(index, 'name', e.target.value)}
                     className="flex-1 px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-primary"
+                    aria-label={`범위 ${index + 1} 파일명`}
+                    title={`범위 ${index + 1}의 파일명을 입력하세요`}
                   />
                   <input
                     type="number"
@@ -195,6 +197,8 @@ export function PDFSplit() {
                     value={range.start}
                     onChange={(e) => updateRange(index, 'start', parseInt(e.target.value) || 1)}
                     className="w-16 px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-primary"
+                    aria-label={`범위 ${index + 1} 시작 페이지`}
+                    title={`범위 ${index + 1}의 시작 페이지를 입력하세요`}
                   />
                   <span className="text-sm text-gray-500">~</span>
                   <input
@@ -205,6 +209,8 @@ export function PDFSplit() {
                     value={range.end}
                     onChange={(e) => updateRange(index, 'end', parseInt(e.target.value) || pageCount)}
                     className="w-16 px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-primary"
+                    aria-label={`범위 ${index + 1} 끝 페이지`}
+                    title={`범위 ${index + 1}의 끝 페이지를 입력하세요`}
                   />
                   {ranges.length > 1 && (
                     <Button
@@ -212,6 +218,8 @@ export function PDFSplit() {
                       size="sm"
                       onClick={() => removeRange(index)}
                       className="h-8 w-8 p-0"
+                      aria-label={`범위 ${index + 1} 삭제`}
+                      title={`범위 ${index + 1}을 삭제합니다`}
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>

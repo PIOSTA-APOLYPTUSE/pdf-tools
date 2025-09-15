@@ -118,6 +118,8 @@ export function PDFMerge() {
                     size="sm"
                     onClick={() => removeFile(index)}
                     className="h-8 w-8 p-0"
+                    aria-label={`${file.name} 파일 제거`}
+                    title={`${file.name} 파일을 목록에서 제거합니다`}
                   >
                     <Trash2 className="h-4 w-4" />
                   </Button>
