@@ -1,27 +1,6 @@
 {
-  "version": 2,
-  "name": "pdf-tools",
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/next"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/"
-    }
-  ],
-  "env": {
-    "NODE_ENV": "production"
-  },
-  "functions": {
-    "app/page.tsx": {
-      "maxDuration": 30
-    }
-  },
-  "github": {
-    "enabled": true
-  }
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "framework": "nextjs",
+  "installCommand": "npm install"
 }

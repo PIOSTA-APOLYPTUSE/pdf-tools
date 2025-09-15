@@ -52,10 +52,10 @@ export default function Contact() {
                       서비스 관련 문의, 버그 신고, 기능 제안 등
                     </p>
                     <a
-                      href="mailto:support@pdftools.com"
+                      href="mailto:granjangarti@gmail.com"
                       className="text-blue-600 hover:underline"
                     >
-                      support@pdftools.com
+                      granjangarti@gmail.com
                     </a>
                   </div>
                 </div>
