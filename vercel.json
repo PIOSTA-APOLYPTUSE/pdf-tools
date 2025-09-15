@@ -20,5 +20,8 @@
     "app/page.tsx": {
       "maxDuration": 30
     }
+  },
+  "github": {
+    "enabled": true
   }
 }
