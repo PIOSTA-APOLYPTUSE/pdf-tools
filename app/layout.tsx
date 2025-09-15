@@ -55,6 +55,11 @@ export default function RootLayout({
         <link rel="canonical" href={process.env.NEXT_PUBLIC_SITE_URL || "https://pdf-tools.vercel.app"} />
         <meta name="google-site-verification" content={process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION || ""} />
         <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2785050916774668"
+          crossOrigin="anonymous"
+        ></script>
+        <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
