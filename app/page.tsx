@@ -154,6 +154,64 @@ export default function Home() {
               </div>
             </div>
 
+            {/* FAQ 섹션 */}
+            <div className="mt-16">
+              <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">
+                자주 묻는 질문 (FAQ)
+              </h3>
+              <div className="max-w-4xl mx-auto space-y-6">
+                <div className="bg-white rounded-lg shadow-sm border p-6">
+                  <h4 className="text-lg font-semibold mb-2 text-gray-800">
+                    PDF 파일을 합치는 방법이 궁금해요
+                  </h4>
+                  <p className="text-gray-600">
+                    PDF 합치기 도구를 선택한 후, 합치고 싶은 PDF 파일들을 드래그 앤 드롭하거나 클릭하여 업로드하세요.
+                    파일 순서를 확인한 후 '합치기' 버튼을 클릭하면 하나의 PDF 파일로 다운로드됩니다.
+                  </p>
+                </div>
+
+                <div className="bg-white rounded-lg shadow-sm border p-6">
+                  <h4 className="text-lg font-semibold mb-2 text-gray-800">
+                    PDF 분할은 어떻게 하나요?
+                  </h4>
+                  <p className="text-gray-600">
+                    PDF 분할 도구에서 분할하고 싶은 PDF 파일을 업로드하세요.
+                    페이지 범위를 설정하고 각 파일의 이름을 정한 후 '분할' 버튼을 클릭하면 여러 개의 PDF 파일로 나누어집니다.
+                  </p>
+                </div>
+
+                <div className="bg-white rounded-lg shadow-sm border p-6">
+                  <h4 className="text-lg font-semibold mb-2 text-gray-800">
+                    파일 크기 제한이 있나요?
+                  </h4>
+                  <p className="text-gray-600">
+                    별도의 파일 크기 제한은 없습니다. 다만 브라우저 메모리에 따라 처리 가능한 크기가 달라질 수 있으며,
+                    대용량 파일의 경우 처리 시간이 더 걸릴 수 있습니다.
+                  </p>
+                </div>
+
+                <div className="bg-white rounded-lg shadow-sm border p-6">
+                  <h4 className="text-lg font-semibold mb-2 text-gray-800">
+                    내 파일이 안전한가요?
+                  </h4>
+                  <p className="text-gray-600">
+                    모든 PDF 편집 작업은 브라우저에서 처리되며, 파일이 외부 서버로 전송되지 않습니다.
+                    개인정보와 문서 내용이 100% 보호되며, 브라우저를 닫으면 모든 데이터가 자동 삭제됩니다.
+                  </p>
+                </div>
+
+                <div className="bg-white rounded-lg shadow-sm border p-6">
+                  <h4 className="text-lg font-semibold mb-2 text-gray-800">
+                    모바일에서도 사용할 수 있나요?
+                  </h4>
+                  <p className="text-gray-600">
+                    네, 스마트폰과 태블릿을 포함한 모든 모던 브라우저에서 사용 가능합니다.
+                    반응형 디자인으로 제작되어 어떤 기기에서든 편리하게 PDF를 편집할 수 있습니다.
+                  </p>
+                </div>
+              </div>
+            </div>
+
           </div>
         ) : activeTool === 'merge' ? (
           <PDFMerge />
